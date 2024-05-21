@@ -1,6 +1,11 @@
 <?php
 // Função para verificar se uma data/hora está dentro dos próximos 30 dias e dentro dos horários de trabalho válidos
 function verificarDataHora($date, $time) {
+    // Verifica se a data e a hora não estão vazias
+    if (empty($date) || empty($time)) {
+        return "Inválido. A data e hora devem ser preenchidas.";
+    }
+
     // Verifica se a data está dentro dos próximos 30 dias
     $currentDate = strtotime("today"); // Data atual (sem horário)
     $next30Days = strtotime("+30 days", $currentDate);
@@ -13,6 +18,11 @@ function verificarDataHora($date, $time) {
     $inputHour = date("H", $inputDateTime);
     if ($inputHour < 9 || ($inputHour >= 12 && $inputHour < 13) || $inputHour >= 18) {
         return "Inválido. A hora fornecida não está dentro dos horários de trabalho válidos.";
+    }
+
+    // Verifica se a hora está dentro do horário de almoço (entre 12h e 13h)
+    if ($inputHour >= 12 && $inputHour < 13) {
+        return "Atenção. Está no horário de almoço.";
     }
 
     // Se passou por todas as verificações, retorna sucesso
