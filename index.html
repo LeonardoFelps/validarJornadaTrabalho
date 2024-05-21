@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verificar Data e Hora</title>
+<style>
+    /* Estilos simples para melhorar a aparência */
+    body {
+        font-family: Arial, sans-serif;
+    }
+    form {
+        margin: 50px auto;
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+    label, input {
+        display: block;
+        margin-bottom: 10px;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+</style>
+</head>
+<body>
+
+<form id="dateTimeForm">
+    <label for="date">Digite uma data:</label>
+    <input type="date" id="date" name="date">
+    <label for="time">Digite uma hora:</label>
+    <input type="time" id="time" name="time">
+    <input type="submit" value="Verificar">
+</form>
+
+<script>
+document.getElementById("dateTimeForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evitar o envio do formulário padrão
+    var formData = new FormData(this);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "verification.php", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                alert(xhr.responseText); // Exibe a resposta do servidor
+            } else {
+                alert("Ocorreu um erro ao processar a requisição.");
+            }
+        }
+    };
+    xhr.send(formData); // Envia os dados do formulário para o servidor
+});
+</script>
+
+</body>
+</html>
